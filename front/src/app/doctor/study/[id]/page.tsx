@@ -14,13 +14,13 @@ import { NextPageContext } from "next";
 export default function Study({  }: NextPageContext) {
   
   const params = useParams();
-  const [doctorName, setDoctorName] = useState<string>("");
-  const [doctorAddress, setDoctorAddress] = useState<string>("");
+  const [patientName, setPatientName] = useState('');
+  const [patientAddress, setPatientAddress] = useState('');
   const { eas } = useEas();
   const { address } = useAccount();
   const {
     eas: {
-      schemas: { doctorStudy },
+      schemas: { studyPatient },
     },
   } = useConfig();
   
@@ -36,68 +36,67 @@ export default function Study({  }: NextPageContext) {
     `,
     {
       variables: {
-        address: doctorStudy.address,
-        attester: address,
+        address: studyPatient.address,
+        recipient: address,
       },
     }
   );
 
-  const schemaEncoder = new SchemaEncoder(doctorStudy.schema);
+  const schemaEncoder = new SchemaEncoder(studyPatient.schema);
 
-  const createStudy = async () => {
+  const createPatient = async () => {
     if (address) {
       
       const encodedData = schemaEncoder.encodeData([
-        { name: "doctorName", value: doctorName, type: 'string' },
-        { name: "studyId", value: params.id || '', type: 'bytes32' },
+        { name: "patientName", value: patientName, type: 'string' },
+        { name: "studyId", value: params.id, type: 'bytes32' },
       ]);
 
       await eas
         .attest({
-          schema: doctorStudy.address,
+          schema: studyPatient.schema,
           data: {
-            recipient: doctorAddress || ZERO_ADDRESS,
+            recipient: ZERO_ADDRESS,
             revocable: true,
             data: encodedData,
           },
         })
         .then((tx) => tx.wait())
         .then(() => {
-            setDoctorName('');
-            setDoctorAddress('');
+            setPatientName('');
+            setPatientAddress('');
             refetch();
         })
         .catch(console.error);
     }
   };
 
-  const handleDoctorNameChange = (e: any) => {
-    setDoctorName(e.target.value);
+  const handlePatientNameChange = (e: any) => {
+    setPatientName(e.target.value);
   };
   
-  const handleDoctorAddressChange = (e: any) => {
-    setDoctorAddress(e.target.value);
+  const handlePatientAddressChange = (e: any) => {
+    setPatientAddress(e.target.value);
   };
 
-  const doctors = (datum?.attestations || []).map((attestation: any) => {
-      
+  const patients = (datum?.attestations || []).map((attestation: any) => {
+    console.log('attestation', attestation)
     return {
       id: attestation.id,
-      name: schemaEncoder.decodeData(attestation.data).find(
-        ({ name }) => name === 'doctorName'
-    )?.value.value,
-
+      value: schemaEncoder.decodeData(attestation.data).find(
+        ({ name }) => name === 'study'
+    )?.value.value
       };
 
   });
   
   return (
     <div>
-      <input onChange={handleDoctorNameChange} value={doctorName} />
-      <input onChange={handleDoctorAddressChange} value={doctorAddress} />
-      <button onClick={createStudy}>Create Doctor</button>
+      <input onChange={handlePatientNameChange} value={patientName} />
+      <input onChange={handlePatientAddressChange} value={patientAddress} />
+      <button onClick={createPatient}>Create Patient</button>
       <ul>
-        {doctors.map((study: any) => <Link key={study.id} href={`/study/${study.id}`}><span style={{color:'white'}}>{study.name}</span></Link>)}
+        {patients.map((study: any) => <Link key={study.id} href={`/doctor/patient/${study.id}`}><span style={{color:'white'}}>{study.value}</span></Link>)}
       </ul>
     </div>
   );

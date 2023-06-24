@@ -18,6 +18,7 @@ export default function Test() {
       schemas: { study },
     },
   } = useConfig();
+
   const { data: datum, refetch } = useQuery(
     gql`
       query MyStudies($address: String!, $attester: String!) {
@@ -30,7 +31,7 @@ export default function Test() {
     `,
     {
       variables: {
-        address: study,
+        address: study.address,
         attester: address,
       },
     }
@@ -67,10 +68,14 @@ export default function Test() {
     setStudyName(e.target.value);
   };
 
+  console.log(datum?.attestations);
+
   const studies = (datum?.attestations || []).map((attestation: any) => {
+    const decodedData = schemaEncoder.decodeData(attestation.data);
+    console.log(decodedData);
     return {
       id: attestation.id,
-      value: schemaEncoder.decodeData(attestation.data).find(
+      value: decodedData.find(
         ({ name }) => name === 'study'
     )?.value.value
       };
