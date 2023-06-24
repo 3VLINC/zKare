@@ -3,6 +3,7 @@ pragma solidity ^0.8.17;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "forge-std/console.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 import "sismo-connect-solidity/SismoLib.sol"; // <--- add a Sismo Connect import
 
 /*
@@ -13,13 +14,18 @@ import "sismo-connect-solidity/SismoLib.sol"; // <--- add a Sismo Connect import
  * It will be used to demonstrate how to integrate Sismo Connect
  */
 contract Airdrop is ERC20, SismoConnect {
+  using Counters for Counters.Counter;
   error AlreadyClaimed();
   using SismoConnectHelper for SismoConnectVerifiedResult;
   mapping(uint256 => bool) public claimed;
-  event StudyCreated(string name);
+  mapping(address => string) public doctors;
+  mapping(uint256 => string) public studies;
+  event StudyCreated(uint256 cnt, string name);
+  event DoctorCreated(address addr, string name);
+  Counters.Counter public studyCounter;
 
   // add your appId as a constant
-  bytes16 public constant APP_ID = 0xf4977993e52606cfd67b7a1cde717069;
+  bytes16 public constant APP_ID = 0x173cf2e3342bc071b8a96f96f195b118;
   // use impersonated mode for testing
   bool public constant IS_IMPERSONATION_MODE = true;
 
@@ -31,9 +37,16 @@ contract Airdrop is ERC20, SismoConnect {
     SismoConnect(buildConfig(APP_ID, IS_IMPERSONATION_MODE)) // <--- Sismo Connect constructor
   {}
 
-  function createStudy(string memory name) public {
+  function addDoctor(address addr, string memory name) public {
+    doctors[addr] = name;
+    emit DoctorCreated(addr, name);
+  }
 
-    emit StudyCreated(name);
+  function createStudy(string memory name) public {
+    studyCounter.increment();
+    uint256 cnt = studyCounter.current();
+    studies[cnt] = name;
+    emit StudyCreated(cnt, name);
   }
 
   function claimWithSismo(bytes memory response) public {

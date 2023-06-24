@@ -3,6 +3,7 @@ import { useAccount, useConnect, useDisconnect, useNetwork, useSwitchNetwork } f
 import { errorsABI, formatError, fundMyAccountOnLocalFork, signMessage } from "@/utils/misc";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { mumbaiFork } from "@/utils/wagmi";
+import { SismoConnectConfig } from "@sismo-core/sismo-connect-react";
 
 const CHAIN = mumbaiFork;
 
@@ -16,6 +17,7 @@ export const Auth = ({ children }: PropsWithChildren) => {
   const { isConnected, address } = useAccount({
     onConnect: async ({ address }) => address && (await fundMyAccountOnLocalFork(address)),
   });
+  const [found, setFound] = useState<boolean>(false);
   const { switchNetworkAsync, switchNetwork } = useSwitchNetwork();
 
   useEffect(() => {
@@ -40,7 +42,8 @@ export const Auth = ({ children }: PropsWithChildren) => {
     </>
   )} else {
 
-    return <>{children}</>;
+    return <>{children}
+    <button onClick={() => disconnect()}>Disconnect</button></>;
 
   } 
 
