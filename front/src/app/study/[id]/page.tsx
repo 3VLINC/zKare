@@ -8,19 +8,25 @@ import { useEas } from "@/shared/Eas";
 import { SchemaEncoder, ZERO_ADDRESS } from "@ethereum-attestation-service/eas-sdk";
 import { useConfig } from "@/shared/Config";
 import Link from "next/link";
-export default function Test() {
+import { useParams, useSearchParams } from 'next/navigation'
+import { NextPageContext } from "next";
 
-  const [studyName, setStudyName] = useState<string>("");
+export default function Study({  }: NextPageContext) {
+  
+  const params = useParams();
+  const [doctorName, setDoctorName] = useState<string>("");
+  const [doctorAddress, setDoctorAddress] = useState<string>("");
   const { eas } = useEas();
   const { address } = useAccount();
   const {
     eas: {
-      schemas: { study },
+      schemas: { doctorStudy },
     },
   } = useConfig();
+  
   const { data: datum, refetch } = useQuery(
     gql`
-      query MyStudies($address: String!, $attester: String!) {
+      query MyStudyDoctors($address: String!, $attester: String!) {
         attestations(take: 25, where: { schemaId: { equals: $address }, attester: { equals: $attester } }) {
           id
           attester
@@ -30,24 +36,25 @@ export default function Test() {
     `,
     {
       variables: {
-        address: study,
+        address: doctorStudy.address,
         attester: address,
       },
     }
   );
 
-  const schemaEncoder = new SchemaEncoder(study.schema);
+  const schemaEncoder = new SchemaEncoder(doctorStudy.schema);
 
   const createStudy = async () => {
     if (address) {
       
       const encodedData = schemaEncoder.encodeData([
-        { name: "study", value: studyName, type: 'string' },
+        { name: "doctorName", value: doctorName, type: 'string' },
+        { name: "studyId", value: params.id || '', type: 'bytes32' },
       ]);
 
       await eas
         .attest({
-          schema: study.schema,
+          schema: doctorStudy.address,
           data: {
             recipient: ZERO_ADDRESS,
             revocable: true,
@@ -56,7 +63,7 @@ export default function Test() {
         })
         .then((tx) => tx.wait())
         .then(() => {
-            setStudyName('');
+            setDoctorName('');
             refetch();
         })
         .catch(console.error);
@@ -64,27 +71,27 @@ export default function Test() {
   };
 
   const handleStudyNameChange = (e: any) => {
-    setStudyName(e.target.value);
+    setDoctorName(e.target.value);
   };
 
-  const studies = (datum?.attestations || []).map((attestation: any) => {
-      console.log(attestation);
+  const doctors = (datum?.attestations || []).map((attestation: any) => {
       
     return {
       id: attestation.id,
-      value: schemaEncoder.decodeData(attestation.data).find(
-        ({ name }) => name === 'study'
-    )?.value.value
+      name: schemaEncoder.decodeData(attestation.data).find(
+        ({ name }) => name === 'doctorName'
+    )?.value.value,
+
       };
 
   });
-
+  
   return (
     <div>
-      <input onChange={handleStudyNameChange} value={studyName} />
-      <button onClick={createStudy}>Create Study</button>
+      <input onChange={handleStudyNameChange} value={doctorName} />
+      <button onClick={createStudy}>Create Doctor</button>
       <ul>
-        {studies.map((study: any) => <Link key={study.id} href={`/study/${study.id}`}><span style={{color:'white'}}>{study.value}</span></Link>)}
+        {doctors.map((study: any) => <Link key={study.id} href={`/study/${study.id}`}><span style={{color:'white'}}>{study.name}</span></Link>)}
       </ul>
     </div>
   );
