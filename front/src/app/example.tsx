@@ -35,7 +35,7 @@ import {
   AuthType, // the authType enum, we will choose 'VAULT' in this tutorial
   ClaimType, // the claimType enum, we will choose 'GTE' in this tutorial, to check that the user has a value greater than a given threshold
 } from "@sismo-core/sismo-connect-react";
-import { transactions } from "../../../broadcast/ZKare.s.sol/5151111/run-latest.json";
+import { transactions } from "../../../broadcast/ZKare.s.sol/420/run-latest.json";
 
 /* ***********************  Sismo Connect Config *************************** */
 

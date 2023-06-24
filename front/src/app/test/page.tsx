@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useContractRead, useContractWrite, useNetwork, usePrepareContractWrite } from "wagmi";
-import { transactions } from "../../../../broadcast/ZKare.s.sol/5151111/run-latest.json";
+import { transactions } from "../../../../broadcast/ZKare.s.sol/420/run-latest.json";
 import { abi as ZKareABI } from "../../../../abi/ZKare.json";
 import { errorsABI } from "@/utils/misc";
 
@@ -28,7 +28,6 @@ export default function Test() {
         functionName: 'studyCounter'
     });
 
-    console.log('number of studies', (data as BigInt).toString() , error);
     const createStudy = () => {
         writeAsync?.();
     }
