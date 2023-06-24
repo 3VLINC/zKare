@@ -4,6 +4,7 @@ import { errorsABI, formatError, fundMyAccountOnLocalFork, signMessage } from "@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { mumbaiFork } from "@/utils/wagmi";
 import { SismoConnectConfig } from "@sismo-core/sismo-connect-react";
+import { redirect, usePathname } from 'next/navigation'
 
 const CHAIN = mumbaiFork;
 
@@ -20,31 +21,42 @@ export const Auth = ({ children }: PropsWithChildren) => {
   const [found, setFound] = useState<boolean>(false);
   const { switchNetworkAsync, switchNetwork } = useSwitchNetwork();
 
+  const pathname = usePathname();
+
   useEffect(() => {
     if (chain?.id !== CHAIN.id) return setError(`Please switch to ${CHAIN.name} network`);
     setError("");
   }, [chain]);
   
-  if (!isConnected) {
-    return (
-    <>
-      {connectors.map((connector) => (
-        <button
-          disabled={!connector.ready || isLoading}
-          key={connector.id}
-          onClick={() => connect({ connector })}
-        >
-          {isLoading && pendingConnector?.id === connector.id
-            ? "Connecting..."
-            : "Connect"}
-        </button>
-      ))}
-    </>
-  )} else {
+  if (pathname !== "/") {
 
-    return <>{children}
-    <button onClick={() => disconnect()}>Disconnect</button></>;
+    if (!isConnected) {
+      redirect("/")
+   
+    // return (
+    // <>
+    //   {connectors.map((connector) => (
+    //     <button
+    //       disabled={!connector.ready || isLoading}
+    //       key={connector.id}
+    //       onClick={() => connect({ connector })}
+    //     >
+    //       {isLoading && pendingConnector?.id === connector.id
+    //         ? "Connecting..."
+    //         : "Connect"}
+    //     </button>
+    //   ))}
+      
+    // </>
+    // )
+    } else {
+      return <>{children}
+      {/* <button onClick={() => disconnect()}>Disconnect</button> */}
+      </>;
 
-  } 
+    }
+  } else {
+    return <>{children}</>;
+  }
 
 }
