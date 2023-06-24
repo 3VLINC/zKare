@@ -9,7 +9,8 @@ declare global {
   }
 }
 
-export const publicWalletClient = createWalletClient({
+export const publicWalletClient = () => {
+  return createWalletClient({
   chain: mumbaiFork,
   transport: custom(window.ethereum),
   // The private key of the second account of the local anvil network
@@ -17,14 +18,15 @@ export const publicWalletClient = createWalletClient({
   account: privateKeyToAccount(
     "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
   ),
-});
+})
+};
 
 export const fundMyAccountOnLocalFork = async (address: `0x${string}` | null) => {
   if (!address) return;
   try {
     const balance = await fetchBalance({ address, chainId: mumbaiFork.id });
-    if (balance?.value < parseEther("5")) {
-      await publicWalletClient.sendTransaction({
+    if (balance?.value < parseEther("5") && typeof window !== "undefined") {
+      await publicWalletClient().sendTransaction({
         chain: mumbaiFork,
         to: address,
         value: parseEther("5"),

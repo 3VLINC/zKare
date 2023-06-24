@@ -16,6 +16,7 @@ contract Airdrop is ERC20, SismoConnect {
   error AlreadyClaimed();
   using SismoConnectHelper for SismoConnectVerifiedResult;
   mapping(uint256 => bool) public claimed;
+  event StudyCreated(string name);
 
   // add your appId as a constant
   bytes16 public constant APP_ID = 0xf4977993e52606cfd67b7a1cde717069;
@@ -29,6 +30,11 @@ contract Airdrop is ERC20, SismoConnect {
     ERC20(name, symbol)
     SismoConnect(buildConfig(APP_ID, IS_IMPERSONATION_MODE)) // <--- Sismo Connect constructor
   {}
+
+  function createStudy(string memory name) public {
+
+    emit StudyCreated(name);
+  }
 
   function claimWithSismo(bytes memory response) public {
     SismoConnectVerifiedResult memory result = verify({
