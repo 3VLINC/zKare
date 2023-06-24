@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import logo from './zkare.png';
 const Banner = () => {
   const bannerStyle = {
     backgroundColor: '#FFFFFF',
@@ -20,12 +21,14 @@ const Banner = () => {
     fontSize: '16px',
   };
 
-
   return (
     <div style={bannerStyle}>
-        <Image src="./zkare.png"></Image>
-      <h1 style={titleStyle}>zKare</h1>
-
+        <Image 
+        src={logo}
+        alt="picture"
+        width ={125}
+        height={125}
+        ></Image>
     </div>
   );
 };
