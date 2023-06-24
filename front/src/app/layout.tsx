@@ -19,18 +19,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html>
       <body className={inter.className}>
-
-        {children}
-        <WagmiProvider><Config><Apollo>
-
-          <Auth>
-            <Eas><div />
-            </Eas>
-          </Auth>
-        
-        </Apollo></Config></WagmiProvider>
+        <WagmiProvider>
+          <Config>
+            <Apollo>
+              <Auth>
+                <Eas>
+                  {children}
+                </Eas>
+              </Auth>
+            </Apollo>
+          </Config>
+        </WagmiProvider>
       </body>
     </html>
   );
 }
-
