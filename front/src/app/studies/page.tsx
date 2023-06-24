@@ -1,14 +1,20 @@
 "use client";
 import { useState } from "react";
-import { useContractRead, useContractWrite, useNetwork, usePrepareContractWrite } from "wagmi";
-import { transactions } from "../../../../broadcast/ZKare.s.sol/5151111/run-latest.json";
+import {  useAccount, useContractRead, useContractWrite, useNetwork, usePrepareContractWrite } from "wagmi";
+import { transactions } from "../../../../broadcast/ZKare.s.sol/420/run-latest.json";
 import { abi as ZKareABI } from "../../../../abi/ZKare.json";
 import { errorsABI } from "@/utils/misc";
 import { useQuery, gql } from '@apollo/client';
+import { useEas } from "@/shared/Eas";
+import { SchemaEncoder,  } from "@ethereum-attestation-service/eas-sdk";
+import { useConfig } from "@/shared/Config";
 
 export default function Test() {
     const [studyName, setStudyName] = useState<string>("");
     const { chain } = useNetwork();
+    const { eas, offchain, signer } = useEas();
+    const { address } = useAccount();
+    const { eas: { schemas: { doctor }}} = useConfig();
     const { data: datum } = useQuery(gql`
         query MyDoctors {
             attestations(take: 25, where: { schemaId: { equals: "0x234dee4d3e6a625b4121e2042d6267058755e53a2ecc55555da51a1e6f06cc58"}}) {
@@ -43,8 +49,48 @@ export default function Test() {
     });
 
     // console.log('number of studies', (data as BigInt).toString() , error);
-    const createStudy = () => {
-        writeAsync?.();
+    const createStudy = async () => {
+        if (address) {
+
+            const schemaEncoder = new SchemaEncoder("string name");
+            const encodedData = schemaEncoder.encodeData([
+            { name: "name", value: "Hal Incandenza", type: "string" }
+            ]);
+            console.log('schema is', doctor);
+            // offchain.signOffchainAttestation(
+            //     {
+            //         schema: doctor,
+            //         recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
+            //         revocable: true,
+            //         data: encodedData,
+            //         expirationTime: 0,
+            //         // Unix timestamp of current time
+            //         time: 1671219636,
+            //         nonce: 0,
+            //         version: 1,
+            //         refUID: '0x0000000000000000000000000000000000000000000000000000000000000000'
+
+            //     }, signer).then(
+            //         console.log
+            //     )
+            console.log('schema id', doctor);
+            const tx = await eas.attest(
+                {
+                    schema: doctor,
+                    data: {
+                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
+                        revocable: true,
+                        data: encodedData
+                    },
+                }
+            ).then(
+                (tx) => tx.wait()
+            ).then(
+                (id) => console.log('attestation id', id)
+            ).catch(
+                console.error
+            );
+        }
     }
 
     const handleStudyNameChange = (e: any) => {

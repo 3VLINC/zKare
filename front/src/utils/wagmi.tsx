@@ -20,16 +20,18 @@ import { InjectedConnector } from "wagmi/connectors/injected";
 import { publicProvider } from "wagmi/providers/public";
 
 export const mumbaiFork = {
-  id: 5151111,
+  id: 420,
   name: "Optimism Goerli - Tutorial Sismo",
   network: "forkMumbaiTutoSismo",
   nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ["http://127.0.0.1:8545"],
+      http: ["http://goerli.optimism.io:8545"],
+      //http: ["http://127.0.0.1:8545"],
     },
     public: {
-      http: ["http://127.0.0.1:8545"],
+      http: ["http://goerli.optimism.io:8545"],
+      //http: ["http://127.0.0.1:8545"],
     },
   },
 } as const satisfies Chain;
