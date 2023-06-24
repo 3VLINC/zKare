@@ -82,6 +82,49 @@ export default function Test() {
                         revocable: true,
                         data: encodedData
                     },
+                    // will update the receipents soon
+                    schema: Patient,
+                    data: {
+                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
+                        revocable: true,
+                        data: address
+                    },
+                    schema: Age,
+                    data: {
+                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
+                        revocable: true,
+                        data: bytes32
+                    },
+                    schema: Gender,
+                    data: {
+                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
+                        revocable: true,
+                        data: string
+                    },
+                    schema: Disease,
+                    data: {
+                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
+                        revocable: true,
+                        data: string
+                    },
+                    schema: Medications,
+                    data: {
+                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
+                        revocable: true,
+                        data: string
+                    },
+                    schema: Smoker,
+                    data: {
+                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
+                        revocable: true,
+                        data: bool
+                    },
+                    schema: Additional Information,
+                    data: {
+                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
+                        revocable: true,
+                        data: string
+                    },
                 }
             ).then(
                 (tx) => tx.wait()
