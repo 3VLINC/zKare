@@ -7,3 +7,6 @@
 [submodule "lib/sismo-connect-packages"]
 	path = lib/sismo-connect-packages
 	url = https://github.com/sismo-core/sismo-connect-packages
+[submodule "lib/eas-contracts"]
+	path = lib/eas-contracts
+	url = https://github.com/ethereum-attestation-service/eas-contracts
