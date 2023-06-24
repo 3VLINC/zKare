@@ -5,7 +5,8 @@ import Apollo from "@/shared/Apollo";
 import { Auth } from "@/shared/Auth";
 import { Config } from "@/shared/Config";
 import { Eas } from "@/shared/Eas";
-
+import Banner from "./components/banner.tsx"
+import Doctor from "./components/doctor.tsx"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -15,10 +16,16 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <WagmiProvider><Config><Apollo><Auth><Eas>{children}</Eas></Auth></Apollo></Config></WagmiProvider>
-      </body>
-    </html>
+    <div>
+      <Banner></Banner>
+      <Doctor></Doctor>
+    </div>
   );
 }
+
+
+// <html lang="en">
+//       <body className={inter.className}>
+//         <WagmiProvider><Config><Apollo><Auth><Eas>{children}</Eas></Auth></Apollo></Config></WagmiProvider>
+//       </body>
+//     </html>
