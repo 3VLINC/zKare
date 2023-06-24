@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { useContractRead, useContractWrite, useNetwork, usePrepareContractWrite } from "wagmi";
-import { transactions } from "../../../../broadcast/Airdrop.s.sol/5151111/run-latest.json";
-import { abi as AirdropABI } from "../../../../abi/Airdrop.json";
+import { transactions } from "../../../../broadcast/ZKare.s.sol/5151111/run-latest.json";
+import { abi as ZKareABI } from "../../../../abi/ZKare.json";
 import { errorsABI } from "@/utils/misc";
 
 export default function Test() {
@@ -12,7 +12,7 @@ export default function Test() {
     studyName && chain
       ? {
           address: transactions[0].contractAddress as `0x${string}}`,
-          abi: [...AirdropABI, ...errorsABI],
+          abi: [...ZKareABI, ...errorsABI],
           functionName: "createStudy",
           args: [studyName],
           chain,
@@ -23,7 +23,7 @@ export default function Test() {
     const { writeAsync } = useContractWrite(writeConfig);
 
     const { data, error } = useContractRead({
-        abi: [...AirdropABI],
+        abi: [...ZKareABI],
         address: transactions[0].contractAddress as `0x${string}}`,
         functionName: 'studyCounter'
     });

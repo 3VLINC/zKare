@@ -21,9 +21,9 @@ import { publicProvider } from "wagmi/providers/public";
 
 export const mumbaiFork = {
   id: 5151111,
-  name: "Fork Mumbai - Tutorial Sismo",
+  name: "Optimism Goerli - Tutorial Sismo",
   network: "forkMumbaiTutoSismo",
-  nativeCurrency: { name: "MATIC", symbol: "MATIC", decimals: 18 },
+  nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
   rpcUrls: {
     default: {
       http: ["http://127.0.0.1:8545"],

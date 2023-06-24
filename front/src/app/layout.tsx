@@ -1,19 +1,23 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { WagmiProvider } from "@/utils/wagmi";
+import Apollo from "@/shared/Apollo";
+import { Auth } from "@/shared/Auth";
+import { Config } from "@/shared/Config";
+import { Eas } from "@/shared/Eas";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Sismo Connect - Onchain Tutorial",
-  description: "A simple ERC20 gated airdrop example using Sismo Connect",
+  description: "A medical research platform built on zk technology",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <WagmiProvider>{children}</WagmiProvider>
+        <WagmiProvider><Config><Apollo><Auth><Eas>{children}</Eas></Auth></Apollo></Config></WagmiProvider>
       </body>
     </html>
   );

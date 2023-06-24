@@ -5,15 +5,15 @@ import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "forge-std/console.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "sismo-connect-solidity/SismoLib.sol"; // <--- add a Sismo Connect import
-
+import {EAS} from "lib/eas-contracts/contracts/EAS.sol";
+import {SchemaRegistry} from "lib/eas-contracts/contracts/SchemaRegistry.sol";
 /*
- * @title Airdrop
- * @author Sismo
- * @dev Simple Airdrop contract that mints ERC20 tokens to the msg.sender
- * This contract is used for tutorial purposes only
+ * @title ZKare
+ * @author ZKare
+ * @dev Simple contract used for ZK powered medical research studies
  * It will be used to demonstrate how to integrate Sismo Connect
  */
-contract Airdrop is ERC20, SismoConnect {
+contract ZKare is ERC20, SismoConnect {
   using Counters for Counters.Counter;
   error AlreadyClaimed();
   using SismoConnectHelper for SismoConnectVerifiedResult;
@@ -23,6 +23,9 @@ contract Airdrop is ERC20, SismoConnect {
   event StudyCreated(uint256 cnt, string name);
   event DoctorCreated(address addr, string name);
   Counters.Counter public studyCounter;
+  
+  EAS private eas;
+  SchemaRegistry private schemaRegistry;
 
   // add your appId as a constant
   bytes16 public constant APP_ID = 0x173cf2e3342bc071b8a96f96f195b118;
@@ -31,13 +34,24 @@ contract Airdrop is ERC20, SismoConnect {
 
   constructor(
     string memory name,
-    string memory symbol
+    string memory symbol,
+    address _eas,
+    address _schemaRegistry
   )
     ERC20(name, symbol)
     SismoConnect(buildConfig(APP_ID, IS_IMPERSONATION_MODE)) // <--- Sismo Connect constructor
-  {}
+  {
+    eas = EAS(_eas);
+    schemaRegistry = SchemaRegistry(_schemaRegistry);
+
+  }
 
   function addDoctor(address addr, string memory name) public {
+    // eas.attest({
+    //   subject: addr,
+    //   schema: schemaRegistry.getSchemaId("doctor"),
+    //   data: abi.encode(name)
+    // });
     doctors[addr] = name;
     emit DoctorCreated(addr, name);
   }

@@ -26,7 +26,7 @@ import {
 } from "viem/chains";
 import { waitForTransaction } from "@wagmi/core";
 import { decodeEventLog, formatEther } from "viem";
-import { abi as AirdropABI } from "../../../abi/Airdrop.json";
+import { abi as ZKareABI } from "../../../abi/ZKare.json";
 import { errorsABI, formatError, fundMyAccountOnLocalFork, signMessage } from "@/utils/misc";
 import { mumbaiFork } from "@/utils/wagmi";
 import {
@@ -35,7 +35,7 @@ import {
   AuthType, // the authType enum, we will choose 'VAULT' in this tutorial
   ClaimType, // the claimType enum, we will choose 'GTE' in this tutorial, to check that the user has a value greater than a given threshold
 } from "@sismo-core/sismo-connect-react";
-import { transactions } from "../../../broadcast/Airdrop.s.sol/5151111/run-latest.json";
+import { transactions } from "../../../broadcast/ZKare.s.sol/5151111/run-latest.json";
 
 /* ***********************  Sismo Connect Config *************************** */
 
@@ -76,7 +76,7 @@ export default function Home() {
     responseBytes && chain
       ? {
           address: transactions[0].contractAddress as `0x${string}}`,
-          abi: [...AirdropABI, ...errorsABI],
+          abi: [...ZKareABI, ...errorsABI],
           functionName: "claimWithSismo",
           args: [responseBytes],
           chain,
@@ -99,7 +99,7 @@ export default function Home() {
   }, [wagmiSimulateError, isConnected]);
 
   /* ************  Handle the airdrop claim button click ******************* */
-  async function claimAirdrop() {
+  async function claimZKare() {
     if (!address) return;
     setError("");
     setLoading(true);
@@ -110,7 +110,7 @@ export default function Home() {
       const txReceipt = tx && (await waitForTransaction({ hash: tx.hash }));
       if (txReceipt?.status === "success") {
         const mintEvent = decodeEventLog({
-          abi: AirdropABI,
+          abi: ZKareABI,
           data: txReceipt.logs[0]?.data,
           topics: txReceipt.logs[0]?.topics,
         });
@@ -202,7 +202,7 @@ export default function Home() {
           <>
             <p>Chain: {chain?.name}</p>
             <p>Your airdrop destination address is: {address}</p>
-            <button disabled={loading || Boolean(error)} onClick={() => claimAirdrop()}>
+            <button disabled={loading || Boolean(error)} onClick={() => claimZKare()}>
               {!loading ? "Claim" : "Claiming..."}
             </button>
           </>

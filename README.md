@@ -52,12 +52,12 @@ yarn dev
 The frontend is now available on http://localhost:3000/ and the contracts have been deployed on your local blockchain.
 You can now experiment the user flow by going to your local frontend http://localhost:3000/.
 
-### Deploy your Airdrop contract
+### Deploy your ZKare contract
 
 With a private key, a RPC url and an etherscan api key:
 
 ```bash
-forge script DeployAirdrop \
+forge script DeployZKare \
 --rpc-url $RPC_URL \
 --private-key "$PRIVATE_KEY" \
 --broadcast \
@@ -70,7 +70,7 @@ forge script DeployAirdrop \
 With a mnemonic and a sender:
 
 ```bash
-forge script DeployAirdrop \
+forge script DeployZKare \
 --rpc-url $RPC_URL \
 --mnemonics "$MNEMONIC" \
 --sender $SENDER \
