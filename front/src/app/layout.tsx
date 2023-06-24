@@ -5,9 +5,8 @@ import Apollo from "@/shared/Apollo";
 import { Auth } from "@/shared/Auth";
 import { Config } from "@/shared/Config";
 import { Eas } from "@/shared/Eas";
-import App from "./page";
-// import Banner from "./components/banner.tsx"
-// import Doctor from "./components/doctor.tsx"
+import 'bulma/css/bulma.min.css';
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
