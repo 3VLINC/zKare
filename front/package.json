@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.16",
-    "@ethereum-attestation-service/eas-sdk": "^0.29.0",
     "@ethereum-attestation-service/eas-contracts": "^0.28.1",
+    "@ethereum-attestation-service/eas-sdk": "^0.29.0",
     "@sismo-core/sismo-connect-react": "0.0.15",
     "@types/node": "20.2.3",
     "@types/react": "18.2.7",
