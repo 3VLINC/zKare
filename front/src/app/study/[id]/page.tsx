@@ -8,7 +8,7 @@ import { useEas } from "@/shared/Eas";
 import { SchemaEncoder, ZERO_ADDRESS } from "@ethereum-attestation-service/eas-sdk";
 import { useConfig } from "@/shared/Config";
 import Link from "next/link";
-import { useParams, useSearchParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { NextPageContext } from "next";
 
 export default function Study({  }: NextPageContext) {
@@ -70,8 +70,12 @@ export default function Study({  }: NextPageContext) {
     }
   };
 
-  const handleStudyNameChange = (e: any) => {
+  const handleDoctorNameChange = (e: any) => {
     setDoctorName(e.target.value);
+  };
+  
+  const handleDoctorAddressChange = (e: any) => {
+    setDoctorAddress(e.target.value);
   };
 
   const doctors = (datum?.attestations || []).map((attestation: any) => {
@@ -88,7 +92,8 @@ export default function Study({  }: NextPageContext) {
   
   return (
     <div>
-      <input onChange={handleStudyNameChange} value={doctorName} />
+      <input onChange={handleDoctorNameChange} value={doctorName} />
+      <input onChange={handleDoctorAddressChange} value={doctorAddress} />
       <button onClick={createStudy}>Create Doctor</button>
       <ul>
         {doctors.map((study: any) => <Link key={study.id} href={`/study/${study.id}`}><span style={{color:'white'}}>{study.name}</span></Link>)}
