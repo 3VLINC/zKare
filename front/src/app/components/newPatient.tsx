@@ -17,7 +17,7 @@ const NewPatient = ({ isOpen, onClose, patients }) => {
     setIsChecked(!isChecked)
   }
 
-  const onSave = () => {
+  const onCreate = () => {
     patients.push(patient)
     onClose();
   }
@@ -28,6 +28,7 @@ const NewPatient = ({ isOpen, onClose, patients }) => {
     dob: dob,
     gender: gender,
     smoker: isChecked,
+    address: address,
     records: [
         {
             updated: date,
@@ -104,7 +105,7 @@ const NewPatient = ({ isOpen, onClose, patients }) => {
                 </section>
             <footer className="modal-card-foot">
                 <button className="button" onClick={onClose}>Cancel</button>
-                <button className="button is-primary" onClick={onSave}>Create Patient</button>
+                <button className="button is-primary" onClick={onCreate}>Create Patient</button>
             </footer>
         </div>
       </div>
