@@ -54,7 +54,13 @@ export default function Test() {
 
             const schemaEncoder = new SchemaEncoder("string name");
             const encodedData = schemaEncoder.encodeData([
-            { name: "name", value: "Hal Incandenza", type: "string" }
+            { name: "Patient", value: "", type: "address" },
+            { name: "Age", value: "", type: "bytes32" },
+            { name: "Gender", value: "", type: "string" },
+            { name: "Disease", value: "", type: "string" },
+            { name: "Medications", value: "", type: "string" },
+            { name: "Smoker", value: "", type: "bool" },
+
             ]);
             console.log('schema is', doctor);
             // offchain.signOffchainAttestation(
@@ -81,50 +87,7 @@ export default function Test() {
                         recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
                         revocable: true,
                         data: encodedData
-                    },
-                    // will update the receipents soon
-                    schema: Patient,
-                    data: {
-                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
-                        revocable: true,
-                        data: address
-                    },
-                    schema: Age,
-                    data: {
-                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
-                        revocable: true,
-                        data: bytes32
-                    },
-                    schema: Gender,
-                    data: {
-                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
-                        revocable: true,
-                        data: string
-                    },
-                    schema: Disease,
-                    data: {
-                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
-                        revocable: true,
-                        data: string
-                    },
-                    schema: Medications,
-                    data: {
-                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
-                        revocable: true,
-                        data: string
-                    },
-                    schema: Smoker,
-                    data: {
-                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
-                        revocable: true,
-                        data: bool
-                    },
-                    schema: Additional Information,
-                    data: {
-                        recipient: "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4",
-                        revocable: true,
-                        data: string
-                    },
+                    }
                 }
             ).then(
                 (tx) => tx.wait()
