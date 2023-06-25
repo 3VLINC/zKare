@@ -26,7 +26,7 @@ export default function Study({  }: NextPageContext) {
   
   const { data: datum, refetch } = useQuery(
     gql`
-      query MyStudyDoctors($address: String!, $attester: String!) {
+      query MyStudyPatients($address: String!, $attester: String!) {
         attestations(take: 25, where: { schemaId: { equals: $address }, attester: { equals: $attester } }) {
           id
           attester
@@ -46,7 +46,7 @@ export default function Study({  }: NextPageContext) {
 
   const createPatient = async () => {
     if (address) {
-      console.log(patientName, params.id);
+      
       const encodedData = schemaEncoder.encodeData([
         { name: "patientName", value: patientName, type: 'string' },
         { name: "studyId", value: params.id || '', type: 'bytes32' },
@@ -56,7 +56,7 @@ export default function Study({  }: NextPageContext) {
         .attest({
           schema: studyPatient.address,
           data: {
-            recipient: address,
+            recipient: patientAddress,
             revocable: true,
             data: encodedData,
           },
@@ -94,7 +94,7 @@ export default function Study({  }: NextPageContext) {
       <input onChange={handlePatientAddressChange} value={patientAddress} />
       <button onClick={createPatient}>Create Patient</button>
       <ul>
-        {patients.map((patient: any) => <Link key={patient.id} href={`/doctor/study/${params.id}/patients/${patient.id}`}><span style={{color:'white'}}>{patient.value}</span></Link>)}
+        {patients.map((patient: any) => <Link key={patient.id} href={`/doctor/study/${params.id}/patient/${patient.id}`}><span style={{color:'white'}}>{patient.value}</span></Link>)}
       </ul>
     </div>
   );
