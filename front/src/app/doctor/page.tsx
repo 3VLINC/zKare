@@ -78,7 +78,7 @@ export default function Doctor() {
 
   const studies = (datum2?.attestations || []).map((attestation: any) => {
     const decodedData = schemaEncoder.decodeData(attestation.data);
-    console.log(decodedData);
+    
     return {
       id: attestation.id,
       value: decodedData.find(
@@ -87,8 +87,6 @@ export default function Doctor() {
       };
 
   });
-
-  console.log(studies);
 
   return (
     <div>
