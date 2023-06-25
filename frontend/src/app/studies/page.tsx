@@ -7,6 +7,7 @@ import { useQuery, gql } from "@apollo/client";
 import { useEas } from "@/shared/Eas";
 import { SchemaEncoder, ZERO_ADDRESS } from "@ethereum-attestation-service/eas-sdk";
 import { useConfig } from "@/shared/Config";
+import Link from "next/link";
 export default function Test() {
 
   const [studyName, setStudyName] = useState<string>("");
@@ -17,6 +18,7 @@ export default function Test() {
       schemas: { study },
     },
   } = useConfig();
+
   const { data: datum, refetch } = useQuery(
     gql`
       query MyStudies($address: String!, $attester: String!) {
@@ -29,24 +31,24 @@ export default function Test() {
     `,
     {
       variables: {
-        address: study,
+        address: study.address,
         attester: address,
       },
     }
   );
 
-  const schemaEncoder = new SchemaEncoder("string study");
+  const schemaEncoder = new SchemaEncoder(study.schema);
 
   const createStudy = async () => {
     if (address) {
       
       const encodedData = schemaEncoder.encodeData([
-        { name: "study", value: studyName, type: "string" },
+        { name: "study", value: studyName, type: 'string' },
       ]);
 
       await eas
         .attest({
-          schema: study,
+          schema: study.schema,
           data: {
             recipient: ZERO_ADDRESS,
             revocable: true,
@@ -67,11 +69,14 @@ export default function Test() {
   };
 
   const studies = (datum?.attestations || []).map((attestation: any) => {
-      console.log(attestation);
-      
-    return schemaEncoder.decodeData(attestation.data).find(
+    const decodedData = schemaEncoder.decodeData(attestation.data);
+    return {
+      id: attestation.id,
+      value: decodedData.find(
         ({ name }) => name === 'study'
-    )?.value.value;
+    )?.value.value
+      };
+
   });
 
   return (
@@ -79,7 +84,7 @@ export default function Test() {
       <input onChange={handleStudyNameChange} value={studyName} />
       <button onClick={createStudy}>Create Study</button>
       <ul>
-        {studies.map((study: any) => <p style={{color:'white'}}>{study}</p>)}
+        {studies.map((study: any) => <Link key={study.id} href={`/study/${study.id}`}><span style={{color:'white'}}>{study.value}</span></Link>)}
       </ul>
     </div>
   );
