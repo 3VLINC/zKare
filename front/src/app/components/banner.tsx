@@ -27,7 +27,7 @@ const Banner = () => {
         src={logo}
         alt="picture"
         width ={125}
-        height={125}
+        height={50}
         ></Image>
     </div>
   );
