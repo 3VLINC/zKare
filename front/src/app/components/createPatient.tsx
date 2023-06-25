@@ -19,7 +19,7 @@ const CreatePatient = (patients) => {
         <div className="button is-primary" onClick={handleOpenModal}>
           Create New Patient
         </div>
-        <NewPatient isOpen={isOpen} onClose={handleCloseModal} patients={patients}/>
+        <NewPatient isOpen={isOpen} onClose={handleCloseModal} patients={patients.patients}/>
       </div>
     );
   };
