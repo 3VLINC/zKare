@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import {
-  useAccount, useEnsResolver
+  useAccount
 } from "wagmi";
 import { useQuery, gql } from "@apollo/client";
 import { useEas } from "@/shared/Eas";
@@ -97,7 +97,7 @@ export default function Study({  }: NextPageContext) {
       <input onChange={handleDoctorAddressChange} value={doctorAddress} />
       <button onClick={createStudy}>Create Doctor</button>
       <ul>
-        {doctors.map((study: any) => <Link key={study.id} href={`/study/${study.id}`}><span style={{color:'white'}}>{study.name}</span></Link>)}
+        {doctors.map((doctor: any) => <span style={{color:'white'}}>{doctor.name}</span>)}
       </ul>
     </div>
   );
