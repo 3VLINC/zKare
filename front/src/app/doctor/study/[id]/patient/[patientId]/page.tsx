@@ -7,8 +7,9 @@ import { useConfig } from "@/shared/Config";
 import { useParams } from "next/navigation";
 import { NextPageContext } from "next";
 import { SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
-import { isUndefined } from "util";
 import { usePatientProfileData } from "@/shared/usePatientProfileData";
+import { useAllPatientRecordsData } from "@/shared/useAllPatientRecordsData";
+import Link from "next/link";
 
 export default function Patient({}: NextPageContext) {
   const params = useParams();
@@ -19,6 +20,8 @@ export default function Patient({}: NextPageContext) {
       schemas: { studyPatient, patientProfile },
     },
   } = useConfig();
+
+  const { values: records, refetch: recordsRefetch } = useAllPatientRecordsData(params.patientId);
 
   const { data: studyPatientData, refetch } = useQuery(
     gql`
@@ -71,6 +74,7 @@ export default function Patient({}: NextPageContext) {
         .then((tx) => tx.wait())
         .then(() => {
           refetch();
+          recordsRefetch();
         })
         .catch(console.error);
     }
@@ -121,6 +125,20 @@ export default function Patient({}: NextPageContext) {
           <option value="not-disclosed">Not Disclosed</option>
         </select>
         <button onClick={saveProfile}>Save Profile</button>
+        <h2>Records</h2>
+        {records.map((record) => (
+          
+          <div key={record.id}>
+            <p>{record.bloodType}</p>
+            <p>{record.date?.toString()}</p>
+            <p>{record.gender}</p>
+            <p>{record.heartRate}</p>
+            <p>{record.isOverweight ? 'overweight' : 'not overweight'}</p>
+            <p>{record.isSmoker ? 'smoker' : 'not smoker'}</p>
+            <p>{record.treatment}</p>
+          </div>
+        ))}
+        <Link href={`/doctor/study/${params.id}/patient/${params.patientId}/add-record`}>Add New Record</Link>
       </div>
     );
   } else {

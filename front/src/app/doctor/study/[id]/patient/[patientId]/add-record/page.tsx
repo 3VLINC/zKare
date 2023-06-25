@@ -44,7 +44,7 @@ export default function AddRecord({}: NextPageContext) {
         { name: "isOverweight", value: initialValues.isOverweight, type: "bool" },
         { name: "bloodType", value: initialValues.bloodType, type: "string" },
         { name: "treatment", value: initialValues.treatment, type: "string" },
-        { name: "timestamp", value: date.getTime() / 1000, type: "uint32" },
+        { name: "timestamp", value: Math.round(date.getTime() / 1000), type: "uint32" },
         { name: "heartRate", value: parseInt(heartRate), type: "uint16" },
       ]);
 

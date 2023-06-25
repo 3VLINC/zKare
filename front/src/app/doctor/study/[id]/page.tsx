@@ -23,7 +23,7 @@ export default function Study({  }: NextPageContext) {
       schemas: { studyPatient },
     },
   } = useConfig();
-  
+
   const { data: datum, refetch } = useQuery(
     gql`
       query MyStudyPatients($address: String!, $attester: String!) {
