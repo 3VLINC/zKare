@@ -9,12 +9,6 @@ import { fundMyAccountOnLocalFork } from "@/utils/misc";
 
 export default function App() {
 
-  const config = {
-    appId: "",
-  }
-
-
-
   const { isConnected, address } = useAccount({
     onConnect: async ({ address }) => address && (await fundMyAccountOnLocalFork(address)),
   });
