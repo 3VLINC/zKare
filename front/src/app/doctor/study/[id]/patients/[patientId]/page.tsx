@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useParams } from 'next/navigation'
 import { NextPageContext } from "next";
 
-export default function Study({  }: NextPageContext) {
+export default function Patient({  }: NextPageContext) {
   
   const params = useParams();
   const [patientName, setPatientName] = useState('');
@@ -26,7 +26,7 @@ export default function Study({  }: NextPageContext) {
   
   const { data: datum, refetch } = useQuery(
     gql`
-      query MyStudyDoctors($address: String!, $attester: String!) {
+      query MyStudyPatients($address: String!, $attester: String!) {
         attestations(take: 25, where: { schemaId: { equals: $address }, attester: { equals: $attester } }) {
           id
           attester
@@ -46,15 +46,15 @@ export default function Study({  }: NextPageContext) {
 
   const createPatient = async () => {
     if (address) {
-      console.log(patientName, params.id);
+      
       const encodedData = schemaEncoder.encodeData([
         { name: "patientName", value: patientName, type: 'string' },
-        { name: "studyId", value: params.id || '', type: 'bytes32' },
+        { name: "studyId", value: params.id, type: 'bytes32' },
       ]);
 
       await eas
         .attest({
-          schema: studyPatient.address,
+          schema: studyPatient.schema,
           data: {
             recipient: address,
             revocable: true,
@@ -83,18 +83,19 @@ export default function Study({  }: NextPageContext) {
     return {
       id: attestation.id,
       value: schemaEncoder.decodeData(attestation.data).find(
-        ({ name }) => name === 'patientName'
+        ({ name }) => name === 'study'
     )?.value.value
       };
 
   });
+  
   return (
     <div>
       <input onChange={handlePatientNameChange} value={patientName} />
       <input onChange={handlePatientAddressChange} value={patientAddress} />
       <button onClick={createPatient}>Create Patient</button>
       <ul>
-        {patients.map((patient: any) => <Link key={patient.id} href={`/doctor/study/${params.id}/patients/${patient.id}`}><span style={{color:'white'}}>{patient.value}</span></Link>)}
+        {patients.map((patient: any) => <Link key={patient.id} href={`/doctor/study/${params.id}/patient/${patient.id}`}><span style={{color:'white'}}>{patient.value}</span></Link>)}
       </ul>
     </div>
   );

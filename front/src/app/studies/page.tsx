@@ -68,11 +68,8 @@ export default function Test() {
     setStudyName(e.target.value);
   };
 
-  console.log(datum?.attestations);
-
   const studies = (datum?.attestations || []).map((attestation: any) => {
     const decodedData = schemaEncoder.decodeData(attestation.data);
-    console.log(decodedData);
     return {
       id: attestation.id,
       value: decodedData.find(
