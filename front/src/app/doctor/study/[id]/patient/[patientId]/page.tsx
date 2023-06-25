@@ -5,14 +5,12 @@ import {
 } from "wagmi";
 import { useQuery, gql } from "@apollo/client";
 import { useEas } from "@/shared/Eas";
-import { SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import { useConfig } from "@/shared/Config";
-import Link from "next/link";
 import { useParams } from 'next/navigation'
 import { NextPageContext } from "next";
+import { SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 
 export default function Patient({  }: NextPageContext) {
-  
   
   const params = useParams();
   // const [patientName, setPatientName] = useState('');
@@ -42,9 +40,21 @@ export default function Patient({  }: NextPageContext) {
       },
     }
   );
-  console.log(datum);
 
-  return null;
+  const schemaEncoder = new SchemaEncoder(studyPatient.schema);
+
+  if (datum && datum[0]) {
+
+    console.log(datum);
+    const profile = schemaEncoder.decodeData(datum[0])
+    return (<div>
+      <h1 style={{ color: 'black'}}>Patient: </h1>
+    </div>);
+  } else {
+    return null;
+  }
+
+
 
   // const schemaEncoder = new SchemaEncoder(studyPatient.schema);
 

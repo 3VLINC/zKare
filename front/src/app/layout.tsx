@@ -29,17 +29,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <Apollo>
           <NextUIProvider>
-            {children}
-          </NextUIProvider>
-        </Apollo>
-
-        <WagmiProvider><Config>
+          <WagmiProvider><Config>
           <Auth>
             <Eas>
-              <div />
+            {children}
             </Eas>
           </Auth>
         </Config></WagmiProvider>
+          </NextUIProvider>
+        </Apollo>
 
       </body>
     </html>
