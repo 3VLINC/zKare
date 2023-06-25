@@ -14,7 +14,7 @@ export const Auth = ({ children }: PropsWithChildren) => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const { connect, connectors, isLoading, pendingConnector } = useConnect();
+  const { connect, connectors, isLoading, pendingConnector } = useConnect({ onSuccess: () => redirect("/dashboard") });
   const { disconnect } = useDisconnect();
   const { chain } = useNetwork();
   const { isConnected, address } = useAccount({
@@ -40,11 +40,11 @@ export const Auth = ({ children }: PropsWithChildren) => {
 
       return <>
         {children}
-        <div className="fixed top-4 right-4">
-          {connectors.map((connector) => (
+        <div className="top-0 right-0 fixed p-8 px-16">
 
+          {connectors.map((connector) => (
             <button
-              className="button is-rounded is-medium w-fit font-semibold flex flex-row gap-3 items-center"
+              className="button is-rounded w-fit font-semibold flex flex-row gap-3 items-center"
               disabled={!connector.ready || isLoading}
               key={connector.id}
               onClick={() => connect({ connector })}
@@ -73,11 +73,15 @@ export const Auth = ({ children }: PropsWithChildren) => {
     }
   } else {
     return <>{children}
-      <div className="fixed top-4 right-4">
-        <button onClick={() => disconnect()}>Disconnect</button>
+      <div className="top-0 right-0 fixed p-8 px-16">
+        <button
+          className="button is-rounded  w-fit font-semibold flex flex-row gap-3 items-center"
+          onClick={() => disconnect()}
+        >
+          <span className="pt-0.5"><Image src="/logout.svg" alt="img" width={20} height={20} /></span>
+          Disconnect
+        </button>
       </div>
     </>;
-
   }
-
 }

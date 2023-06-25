@@ -4,12 +4,20 @@ import Image from "next/image";
 import "./globals.css";
 import 'bulma/css/bulma.min.css';
 import { SismoConnectButton } from "@sismo-core/sismo-connect-react";
+import { useAccount } from "wagmi";
+import { fundMyAccountOnLocalFork } from "@/utils/misc";
 
 export default function App() {
 
   const config = {
     appId: "",
   }
+
+
+
+  const { isConnected, address } = useAccount({
+    onConnect: async ({ address }) => address && (await fundMyAccountOnLocalFork(address)),
+  });
 
   return (
 
@@ -26,16 +34,22 @@ export default function App() {
             Zero Knowledge based healthcare data <br /> distribution.
           </span>
 
-          {/* <button className="button is-rounded is-medium w-fit font-semibold flex flex-row gap-3 items-center">
-            <span className="pt-0.5"><Image src="/login.svg" alt="img" width={20} height={20} /></span>
-            Connect your wallet
-          </button> */}
 
-          <div className="w-fit">
+          {isConnected && (
+            <a href="/dashboard">
+              <button className="button is-rounded is-medium w-fit font-semibold flex flex-row gap-3 items-center">
+                <span className="pt-0.5"><Image src="/login.svg" alt="img" width={20} height={20} /></span>
+                Go to your dashboard
+              </button>
+            </a>
+          )}
+
+          {/* <div className="w-fit">
             <SismoConnectButton config={config}
               claim={{ groupId: "0x42c768bb8ae79e4c5c05d3b51a4ec74a" }}
             />
-          </div>
+          </div> */}
+
         </div>
 
         <Image src="/undraw_medical_care_movn.svg" alt="img" width={600} height={600} />
