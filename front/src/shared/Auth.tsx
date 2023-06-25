@@ -1,10 +1,12 @@
 "use client";
+
 import { useAccount, useConnect, useDisconnect, useNetwork, useSwitchNetwork } from "wagmi";
 import { errorsABI, formatError, fundMyAccountOnLocalFork, signMessage } from "@/utils/misc";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { mumbaiFork } from "@/utils/wagmi";
 import { SismoConnectConfig } from "@sismo-core/sismo-connect-react";
 import { redirect, usePathname } from 'next/navigation'
+import Image from "next/image";
 
 const CHAIN = mumbaiFork;
 
@@ -27,36 +29,55 @@ export const Auth = ({ children }: PropsWithChildren) => {
     if (chain?.id !== CHAIN.id) return setError(`Please switch to ${CHAIN.name} network`);
     setError("");
   }, [chain]);
-  
-  if (pathname !== "/") {
 
-    if (!isConnected) {
+  if (!isConnected) {
+
+    if (pathname !== "/") {
+
       redirect("/")
-   
-    // return (
-    // <>
-    //   {connectors.map((connector) => (
-    //     <button
-    //       disabled={!connector.ready || isLoading}
-    //       key={connector.id}
-    //       onClick={() => connect({ connector })}
-    //     >
-    //       {isLoading && pendingConnector?.id === connector.id
-    //         ? "Connecting..."
-    //         : "Connect"}
-    //     </button>
-    //   ))}
-      
-    // </>
-    // )
+
     } else {
-      return <>{children}
-      {/* <button onClick={() => disconnect()}>Disconnect</button> */}
+
+      return <>
+        {children}
+        <div className="fixed top-4 right-4">
+          {connectors.map((connector) => (
+
+            <button
+              className="button is-rounded is-medium w-fit font-semibold flex flex-row gap-3 items-center"
+              disabled={!connector.ready || isLoading}
+              key={connector.id}
+              onClick={() => connect({ connector })}
+            >
+              <span className="pt-0.5"><Image src="/login.svg" alt="img" width={20} height={20} /></span>
+              {isLoading && pendingConnector?.id === connector.id
+                ? "Connecting..."
+                : "Connect your wallet"}
+            </button>
+
+            // <button
+            //   disabled={!connector.ready || isLoading}
+            //   key={connector.id}
+            //   onClick={() => connect({ connector })}
+            // >
+            //   {isLoading && pendingConnector?.id === connector.id
+            //     ? "Connecting..."
+            //     : "Connect"}
+            // </button>
+          ))}
+        </div>
       </>;
+
+
 
     }
   } else {
-    return <>{children}</>;
+    return <>{children}
+      <div className="fixed top-4 right-4">
+        <button onClick={() => disconnect()}>Disconnect</button>
+      </div>
+    </>;
+
   }
 
 }
