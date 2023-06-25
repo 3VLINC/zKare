@@ -1,5 +1,5 @@
 {
-  "name": "front",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.16",
+    "@eonasdan/tempus-dominus": "^6.7.7",
     "@ethereum-attestation-service/eas-contracts": "^0.28.1",
     "@ethereum-attestation-service/eas-sdk": "^0.29.0",
+    "@nextui-org/react": "^1.0.0-beta.13",
     "@sismo-core/sismo-connect-react": "0.0.15",
     "@types/node": "20.2.3",
     "@types/react": "18.2.7",
@@ -26,10 +28,17 @@
     "nodemon": "^2.0.22",
     "react": "18.2.0",
     "react-bulma-components": "4.1.0",
+    "react-calendar-datetime-picker": "^1.6.3",
+    "react-datetime-picker": "^5.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.0",
     "typescript": "5.0.4",
     "viem": "^0.3.24",
     "wagmi": "^1.0.4"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2"
   }
 }

@@ -30,6 +30,7 @@ export default function Study({  }: NextPageContext) {
         attestations(take: 25, where: { schemaId: { equals: $address }, attester: { equals: $attester } }) {
           id
           attester
+          recipient
           data
         }
       }
@@ -81,7 +82,7 @@ export default function Study({  }: NextPageContext) {
 
   const patients = (datum?.attestations || []).map((attestation: any) => {
     return {
-      id: attestation.id,
+      id: attestation.recipient,
       value: schemaEncoder.decodeData(attestation.data).find(
         ({ name }) => name === 'patientName'
     )?.value.value
@@ -94,7 +95,7 @@ export default function Study({  }: NextPageContext) {
       <input onChange={handlePatientAddressChange} value={patientAddress} />
       <button onClick={createPatient}>Create Patient</button>
       <ul>
-        {patients.map((patient: any) => <Link key={patient.id} href={`/doctor/study/${params.id}/patient/${patient.id}`}><span style={{color:'white'}}>{patient.value}</span></Link>)}
+        {patients.map((patient: any, index: number) => <Link key={`${patient.id}-${index}`} href={`/doctor/study/${params.id}/patient/${patient.id}`}><span style={{color:'white'}}>{patient.value}</span></Link>)}
       </ul>
     </div>
   );
