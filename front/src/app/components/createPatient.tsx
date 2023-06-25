@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import NewPatient from "./newPatient"
 import 'bulma/css/bulma.min.css';
 
-const CreatePatient = (patients) => {
+const CreatePatient = ({patients, onSave, newPatient}) => {
     const [isOpen, setIsOpen] = useState(false);
   
     const handleOpenModal = () => {
@@ -11,7 +11,12 @@ const CreatePatient = (patients) => {
   
     const handleCloseModal = () => {
       setIsOpen(false);
+      onSave(patients);
     };
+
+    const handlePatient = (patient) => {
+      newPatient(patient)
+    }
   
     return (
       <div>
@@ -19,7 +24,7 @@ const CreatePatient = (patients) => {
         <div className="button is-primary" onClick={handleOpenModal}>
           Create New Patient
         </div>
-        <NewPatient isOpen={isOpen} onClose={handleCloseModal} patients={patients.patients}/>
+        <NewPatient isOpen={isOpen} onClose={handleCloseModal} patients={patients} newPatient={handlePatient}/>
       </div>
     );
   };

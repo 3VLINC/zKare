@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from "./modal"
 import 'bulma/css/bulma.min.css';
 
-const ModalButton = (patient) => {
+const ModalButton = ({patient}) => {
     const [isOpen, setIsOpen] = useState(false);
   
     const handleOpenModal = () => {
@@ -19,7 +19,7 @@ const ModalButton = (patient) => {
         <div className="button is-info" onClick={handleOpenModal}>
           View
         </div>
-        <Modal isOpen={isOpen} onClose={handleCloseModal} patient={patient.patient}/>
+        <Modal isOpen={isOpen} onClose={handleCloseModal} patient={patient}/>
       </div>
     );
   };
