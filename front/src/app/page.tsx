@@ -6,6 +6,7 @@ import 'bulma/css/bulma.min.css';
 import { SismoConnectButton } from "@sismo-core/sismo-connect-react";
 import { useAccount } from "wagmi";
 import { fundMyAccountOnLocalFork } from "@/utils/misc";
+import Banner from "./components/banner";
 
 export default function App() {
 
@@ -18,7 +19,7 @@ export default function App() {
     <div className="flex flex-col w-screen h-screen p-8 px-16">
 
       <nav className="flex flex-row items-center justify-start w-full">
-        <h1 className="text-3xl">ZKare</h1>
+        <Banner></Banner>
       </nav>
 
       <main className="flex flex-row justify-between h-full items-center">

@@ -45,6 +45,16 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
+"@canvasjs/charts@^3.7.9":
+  version "3.7.9"
+  resolved "https://registry.yarnpkg.com/@canvasjs/charts/-/charts-3.7.9.tgz#30bacfe9784703bace048c88ae51863165ba7102"
+  integrity sha512-d+iSIo1rKZVv+PZJS3/MB8d4A2MlGaoB+GZBrZy07VUA2cxONSeNIDqbnGx77QSs7BYmJS83U/JmXk+8raPFqA==
+
+"@canvasjs/react-charts@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@canvasjs/react-charts/-/react-charts-1.0.0.tgz#84e97e1e3bd045cf345ac9dbe270edf11446af51"
+  integrity sha512-wGI675kz65owAwXZWzJULK9GXKCrPV59+CCawXP801f4rmYGmPskdtGrczgJhA8ThFEgIvq3K4qrkpLDPSmxCQ==
+
 "@chainsafe/as-sha256@^0.3.1":
   version "0.3.1"
   resolved "https://registry.npmjs.org/@chainsafe/as-sha256/-/as-sha256-0.3.1.tgz"
@@ -665,6 +675,11 @@
   dependencies:
     "@json-rpc-tools/types" "^1.7.6"
     "@pedrouid/environment" "^1.0.1"
+
+"@kurkle/color@^0.3.0":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@kurkle/color/-/color-0.3.2.tgz#5acd38242e8bde4f9986e7913c8fdf49d3aa199f"
+  integrity sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==
 
 "@ledgerhq/connect-kit-loader@^1.0.1":
   version "1.0.2"
@@ -3504,6 +3519,13 @@ chalk@^4.0.0, chalk@^4.1.0:
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
+
+chart.js@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-4.3.0.tgz#ac363030ab3fec572850d2d872956f32a46326a1"
+  integrity sha512-ynG0E79xGfMaV2xAHdbhwiPLczxnNNnasrmPEXriXsPJGjmhOBYzFVEsB65w2qMDz+CaBJJuJD0inE/ab/h36g==
+  dependencies:
+    "@kurkle/color" "^0.3.0"
 
 chokidar@3.5.3, chokidar@^3.4.0, chokidar@^3.5.2, chokidar@^3.5.3:
   version "3.5.3"
@@ -6608,6 +6630,11 @@ react-calendar@^4.2.1:
     clsx "^1.2.1"
     get-user-locale "^2.2.1"
     prop-types "^15.6.0"
+
+react-chartjs-2@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-chartjs-2/-/react-chartjs-2-5.2.0.tgz#43c1e3549071c00a1a083ecbd26c1ad34d385f5d"
+  integrity sha512-98iN5aguJyVSxp5U3CblRLH67J8gkfyGNbiK3c+l1QI/G4irHMPQw44aEPmjVag+YKTyQ260NcF82GTQ3bdscA==
 
 react-charts@^2.0.0-beta.7:
   version "2.0.0-beta.7"

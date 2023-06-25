@@ -7,11 +7,14 @@ import { SchemaEncoder, ZERO_ADDRESS } from "@ethereum-attestation-service/eas-s
 import { useConfig } from "@/shared/Config";
 import Link from "next/link";
 import { useStudyData } from "@/shared/useStudyData";
-import { Chart } from "react-charts";
+import Banner from "../components/banner";
+import 'bulma/css/bulma.min.css';
+
 export default function Test() {
   const [studyName, setStudyName] = useState<string>("");
   const { eas } = useEas();
-  const { address } = useAccount();
+  // const { address } = useAccount();
+  const address = "0x6dC9c87776c3dD7BC362c065f1f74fc9F89E52a4";
   const {
     eas: {
       schemas: { study },
@@ -42,13 +45,13 @@ export default function Test() {
   const schemaEncoder = new SchemaEncoder(study.schema);
 
   const createStudy = async () => {
-    debugger;
+    
     if (address) {
       
       const encodedData = schemaEncoder.encodeData([
         { name: "study", value: studyName, type: "string" },
       ]);
-
+      
       await eas
         .attest({
           schema: study.address,
@@ -103,24 +106,31 @@ export default function Test() {
 
   return (
     <div>
-      <input onChange={handleStudyNameChange} value={studyName} />
-      <button onClick={createStudy}>Create Study</button>
-      <ul>
-        {studies.map((study: any) => (
-          <Link style={{ color: "black" }} key={study.id} href={`/study/${study.id}`}>
-            <span style={{ color: "white" }}>{study.value}</span>
-          </Link>
-        ))}
-      </ul>
-      <div
-      style={{
-        width: '400px',
-        height: '300px'
-      }}
-    >
+      <Banner></Banner>
 
-      <Chart data={data} axes={axes} />
-    </div>
+      <div className="box has-text-centered">
+        <div className="columns">
+        <div className="column"></div>
+        <div className="column">
+        <div className="field">
+            <label className="label">Create Study</label>
+            <div className="control">
+                <input className="input" value = {studyName} onChange={handleStudyNameChange} type="text" placeholder="Study Name"/>
+            </div>
+        </div>
+        <div className="button" onClick={createStudy}>Create Study</div>
+        <ul>
+          {studies.map((study: any) => <Link key={study.id} href={`/study/${study.id}`}><span style={{color:'black'}}>
+            {study.value},&nbsp;
+          </span></Link>)}
+        </ul>
+        </div>
+        <div className="column"></div>
+
+        </div>
+      </div>
     </div>
   );
 }
+
+// <input onChange={handleStudyNameChange} value={studyName} />

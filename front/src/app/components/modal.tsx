@@ -26,6 +26,7 @@ const Modal = ({ isOpen, onClose, patient }) => {
     patient.dob = dob;
     patient.gender = gender;
     patient.smoker = isChecked;
+    setTab('Profile');
     onClose();
   }
 
@@ -106,8 +107,13 @@ const Modal = ({ isOpen, onClose, patient }) => {
                                       checked={isChecked}
                                       onChange={checkHandler}
                                       />
-                                          &nbsp;Patient is a Smoker
+                                          &nbsp;Patient is a Smoker&nbsp;
                                       </label>
+                                      <label className="checkbox is-normal">
+                                    <input type="checkbox" 
+                                    />
+                                        &nbsp;Patient is overweight
+                                    </label>
                                   </div>
                               </div>
                           </div>

@@ -10,6 +10,9 @@ import { useConfig } from "@/shared/Config";
 import Link from "next/link";
 import { useParams } from 'next/navigation'
 import { NextPageContext } from "next";
+import Banner from "../../components/banner";
+import 'bulma/css/bulma.min.css';
+
 
 export default function Study({  }: NextPageContext) {
   
@@ -45,6 +48,8 @@ export default function Study({  }: NextPageContext) {
   const schemaEncoder = new SchemaEncoder(doctorStudy.schema);
 
   const createStudy = async () => {
+    const url = 'http://localhost:3000/doctorview'; // Replace with the desired URL
+    window.open(url, '_blank');
     if (address) {
       
       const encodedData = schemaEncoder.encodeData([
@@ -93,12 +98,37 @@ export default function Study({  }: NextPageContext) {
   
   return (
     <div>
-      <input onChange={handleDoctorNameChange} value={doctorName} />
+      <Banner></Banner>
+      <div className="box has-text-centered">
+        <div className="columns">
+        <div className="column"></div>
+        <div className="column">
+        <div className="field">
+            <label className="label">Create Doctor</label>
+            <div className="control">
+                <input className="input" value = {doctorName} onChange={handleDoctorNameChange} type="text" placeholder="Doctor Name"/>
+            </div>
+            <div className="control">
+                <input className="input" value = {doctorAddress} onChange={handleDoctorAddressChange} type="text" placeholder="Doctor Coin Address"/>
+            </div>
+        </div>
+        <div className="button" onClick={createStudy}>Create</div>
+        <ul>
+          {doctors.map((doctor: any) => <span style={{color:'white'}}>{doctor.name}</span>)}
+        </ul>
+        </div>
+        <div className="column"></div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+{/* <input onChange={handleDoctorNameChange} value={doctorName} />
       <input onChange={handleDoctorAddressChange} value={doctorAddress} />
       <button onClick={createStudy}>Create Doctor</button>
       <ul>
         {doctors.map((doctor: any) => <span style={{color:'white'}}>{doctor.name}</span>)}
-      </ul>
-    </div>
-  );
-}
+      </ul> */}

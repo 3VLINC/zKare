@@ -129,7 +129,9 @@ export default function Doctor() {
         ]
     }
 ]
-  const [patients, setPatients] = useState(patientsDefault)
+  const [patients, setPatients] = useState([])
+  // const [patients, setPatients] = useState(patientsDefault)
+
   
 
 const [filter, setFilter] = useState('');
@@ -184,6 +186,7 @@ const filteredData = data.filter((item) =>
         <div className="columns">
             <div className="column">
             <h1 className="title has-text-centered">Patients</h1>
+            {filteredData.length < 1 ?<h3>Create your first patient.</h3> : <></>}
             {filteredData.map((patient: any) => (
                     <div className="card">
                     <div className="card-content">

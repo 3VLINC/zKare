@@ -17,9 +17,19 @@ const NewPatient = ({ isOpen, onClose, patients, newPatient }) => {
     setIsChecked(!isChecked)
   }
 
+  const resetFields = () => {
+    setName("");
+    setAddress("");
+    setGender("");
+    setDob("");
+    setHeartRate("");
+    setIsChecked(false);
+  }
+
   const onCreate = () => {
     newPatient(patient);
     //patients.push(patient)
+    resetFields();
     onClose();
   }
 
@@ -80,13 +90,19 @@ const NewPatient = ({ isOpen, onClose, patients, newPatient }) => {
                                     checked={isChecked}
                                     onChange={checkHandler}
                                     />
-                                        &nbsp;Patient is a Smoker
+                                        &nbsp;Patient is a smoker
+                                    </label>
+                                    <label className="checkbox is-normal">
+                                    <input type="checkbox" 
+                                    
+                                    />
+                                        &nbsp;Patient is overweight
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div className="column">
-                            <h1 className="has-text-centered">First Record</h1>
+                            <h3 className="has-text-centered">First Record</h3>
                             <div className="field">
                                 <label className="label">Heart Rate</label>
                                 <div className="control">
