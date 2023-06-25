@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </NextUIProvider>
 
-        {/* <WagmiProvider><Config><Apollo>
+        <WagmiProvider><Config><Apollo>
 
           <Auth>
             <Eas>
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Eas>
           </Auth>
 
-        </Apollo></Config></WagmiProvider> */}
+        </Apollo></Config></WagmiProvider>
 
       </body>
     </html>
