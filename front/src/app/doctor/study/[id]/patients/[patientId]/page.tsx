@@ -5,7 +5,7 @@ import {
 } from "wagmi";
 import { useQuery, gql } from "@apollo/client";
 import { useEas } from "@/shared/Eas";
-import { SchemaEncoder, ZERO_ADDRESS } from "@ethereum-attestation-service/eas-sdk";
+import { SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import { useConfig } from "@/shared/Config";
 import Link from "next/link";
 import { useParams } from 'next/navigation'
@@ -26,7 +26,7 @@ export default function Patient({  }: NextPageContext) {
   
   const { data: datum, refetch } = useQuery(
     gql`
-      query MyStudyDoctors($address: String!, $attester: String!) {
+      query MyStudyPatients($address: String!, $attester: String!) {
         attestations(take: 25, where: { schemaId: { equals: $address }, attester: { equals: $attester } }) {
           id
           attester
@@ -37,7 +37,7 @@ export default function Patient({  }: NextPageContext) {
     {
       variables: {
         address: studyPatient.address,
-        recipient: address,
+        attester: address,
       },
     }
   );
@@ -56,7 +56,7 @@ export default function Patient({  }: NextPageContext) {
         .attest({
           schema: studyPatient.schema,
           data: {
-            recipient: ZERO_ADDRESS,
+            recipient: address,
             revocable: true,
             data: encodedData,
           },
@@ -95,7 +95,7 @@ export default function Patient({  }: NextPageContext) {
       <input onChange={handlePatientAddressChange} value={patientAddress} />
       <button onClick={createPatient}>Create Patient</button>
       <ul>
-        {patients.map((study: any) => <Link key={study.id} href={`/doctor/patient/${study.id}`}><span style={{color:'white'}}>{study.value}</span></Link>)}
+        {patients.map((patient: any) => <Link key={patient.id} href={`/doctor/study/${params.id}/patient/${patient.id}`}><span style={{color:'white'}}>{patient.value}</span></Link>)}
       </ul>
     </div>
   );
