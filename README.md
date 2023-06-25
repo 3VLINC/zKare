@@ -1,6 +1,4 @@
 
-Sure! Here's a template for the README file for the zKare project:
-
 # zKare
 
 zKare is a decentralized, zero-knowledge-based healthcare data distribution platform. It aims to revolutionize medical data management and foster collaboration between patients and researchers while prioritizing data privacy and security.
