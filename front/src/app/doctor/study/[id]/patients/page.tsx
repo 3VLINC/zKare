@@ -5,13 +5,13 @@ import {
 } from "wagmi";
 import { useQuery, gql } from "@apollo/client";
 import { useEas } from "@/shared/Eas";
-import { SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
+import { SchemaEncoder, ZERO_ADDRESS } from "@ethereum-attestation-service/eas-sdk";
 import { useConfig } from "@/shared/Config";
 import Link from "next/link";
 import { useParams } from 'next/navigation'
 import { NextPageContext } from "next";
 
-export default function Study({  }: NextPageContext) {
+export default function Patient({  }: NextPageContext) {
   
   const params = useParams();
   const [patientName, setPatientName] = useState('');
@@ -37,7 +37,7 @@ export default function Study({  }: NextPageContext) {
     {
       variables: {
         address: studyPatient.address,
-        attester: address,
+        recipient: address,
       },
     }
   );
@@ -46,17 +46,17 @@ export default function Study({  }: NextPageContext) {
 
   const createPatient = async () => {
     if (address) {
-      console.log(patientName, params.id);
+      
       const encodedData = schemaEncoder.encodeData([
         { name: "patientName", value: patientName, type: 'string' },
-        { name: "studyId", value: params.id || '', type: 'bytes32' },
+        { name: "studyId", value: params.id, type: 'bytes32' },
       ]);
 
       await eas
         .attest({
-          schema: studyPatient.address,
+          schema: studyPatient.schema,
           data: {
-            recipient: address,
+            recipient: ZERO_ADDRESS,
             revocable: true,
             data: encodedData,
           },
@@ -83,18 +83,19 @@ export default function Study({  }: NextPageContext) {
     return {
       id: attestation.id,
       value: schemaEncoder.decodeData(attestation.data).find(
-        ({ name }) => name === 'patientName'
+        ({ name }) => name === 'study'
     )?.value.value
       };
 
   });
+  
   return (
     <div>
       <input onChange={handlePatientNameChange} value={patientName} />
       <input onChange={handlePatientAddressChange} value={patientAddress} />
       <button onClick={createPatient}>Create Patient</button>
       <ul>
-        {patients.map((patient: any) => <Link key={patient.id} href={`/doctor/study/${params.id}/patients/${patient.id}`}><span style={{color:'white'}}>{patient.value}</span></Link>)}
+        {patients.map((study: any) => <Link key={study.id} href={`/doctor/patient/${study.id}`}><span style={{color:'white'}}>{study.value}</span></Link>)}
       </ul>
     </div>
   );
