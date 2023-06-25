@@ -1,102 +1,80 @@
-# Sismo Connect - Onchain Tutorial Repository
 
-This repository aims at providing a simple starting codebase to follow the [Sismo Connect - Onchain Tutorial](https://docs.sismo.io/sismo-docs/build-with-sismo-connect/tutorials/onchain-tutorials/tuto). It will help you understand how the [SafeDrop Case Study](https://case-studies.sismo.io/db/safe-drop) has been technically been built. You can also fork the onchain boilerplate that implements this case study with a polished UI by going to [this repository](https://github.com/sismo-core/sismo-connect-boilerplate-onchain).
+Sure! Here's a template for the README file for the zKare project:
 
-## Usage
+# zKare
 
-### Prerequisites
+zKare is a decentralized, zero-knowledge-based healthcare data distribution platform. It aims to revolutionize medical data management and foster collaboration between patients and researchers while prioritizing data privacy and security.
 
-- [Node.js](https://nodejs.org/en/download/) >= 18.15.0 (Latest LTS version)
-- [Yarn](https://classic.yarnpkg.com/en/docs/install)
-- [Foundry](https://book.getfoundry.sh/)
+## Features
 
-### Clone the repository
+- **Decentralized:** zKare utilizes decentralized technologies to ensure the secure storage and distribution of healthcare data, reducing reliance on centralized systems.
 
-```bash
-git clone https://github.com/sismo-core/sismo-connect-onchain-tutorial
-cd sismo-connect-onchain-tutorial
-```
+- **Zero-Knowledge Proofs:** The platform leverages zero-knowledge proofs to protect patient data privacy. Zero-knowledge proofs allow healthcare providers and researchers to access patient data without revealing any sensitive information.
 
-### Install contract dependencies
+- **EAS (Encryption as a Service):** zKare incorporates EAS to provide encryption services, adding an extra layer of security to the data stored and shared within the platform.
 
-```bash
-# updates foundry
-foundryup
-# install smart contract dependencies
-forge install
-```
+- **Sismo (Secure Information Sharing Model):** Sismo is implemented in zKare to facilitate secure information sharing between patients, healthcare institutions, and researchers, promoting collaboration while maintaining data privacy.
 
-### Launch a local fork chain
+- **Digital Wallet Integration:** The platform integrates digital wallets, providing patients with a convenient and user-friendly interface to manage their data securely.
 
-```bash
-# in another terminal
-# starts a local fork of Mumbai
-yarn anvil
-```
+## Getting Started
 
-### Launch the local application
+Follow these steps to set up and run the zKare project:
 
-You can now launch your local dapp with the commands:
+1. Clone the repository:
+   ```
+   git clone https://github.com/3VLINC/zKare.git
+   ```
 
-```bash
-# in another terminal
+2. Ensure that you have Node.js version 18.5.0 installed.
 
-# install frontend dependencies
-cd front
-yarn
+3. Ensure that your Git version is 2.38.0 or higher.
 
-# launch local application
-yarn dev
-```
+4. Install Foundry by running the following command:
+   ```
+   curl -L https://foundry.paradigm.xyz | bash
+   ```
 
-The frontend is now available on http://localhost:3000/ and the contracts have been deployed on your local blockchain.
-You can now experiment the user flow by going to your local frontend http://localhost:3000/.
+5. Run FoundryUp to set up the project:
+   ```
+   foundryup
+   ```
 
-### Deploy your ZKare contract
+6. Install project dependencies:
+   ```
+   forge install
+   ```
 
-With a private key, a RPC url and an etherscan api key:
+7. Start the backend by running the following commands:
+   ```
+   yarn anvil
+   ```
 
-```bash
-forge script DeployZKare \
---rpc-url $RPC_URL \
---private-key "$PRIVATE_KEY" \
---broadcast \
---slow \
---etherscan-api-key "$ETHERSCAN_API_KEY" \
---verify \
---watch
-```
+8. Navigate to the "front" directory and install frontend dependencies:
+   ```
+   cd front
+   yarn
+   ```
 
-With a mnemonic and a sender:
+9. Start the frontend development server:
+   ```
+   yarn dev
+   ```
 
-```bash
-forge script DeployZKare \
---rpc-url $RPC_URL \
---mnemonics "$MNEMONIC" \
---sender $SENDER \
---broadcast \
---slow \
---etherscan-api-key "$ETHERSCAN_API_KEY" \
---verify \
---watch
-```
+10. Access the zKare platform by opening a web browser and navigating to the specified local development URL.
 
-### Run contract tests
+## Contributing
 
-Sismo Connect contracts are currently deployed on several chains.
-You can find the deployed addresses [here](https://docs.sismo.io/sismo-docs/knowledge-base/resources/sismo-101).
-You can then run tests on a local fork network to test your contracts.
+Contributions to zKare are welcome! If you have suggestions, bug reports, or would like to contribute code, please follow the guidelines outlined in the CONTRIBUTING.md file.
 
-```bash
-## Run fork tests with goerli
-forge test --fork-url https://rpc.ankr.com/eth_goerli
+## Acknowledgements
 
-## Run fork tests with mumbai
-forge test --fork-url https://rpc.ankr.com/polygon_mumbai
+We would like to express our gratitude to the contributors and the open-source community for their valuable contributions and support in developing the zKare platform.
 
-## Run fork tests with optimism
-forge test --fork-url https://rpc.ankr.com/optimism
+## Contact
 
-# you can aslo use the rpc url you want by passing an environment variable
-forge test --fork-url $RPC_URL
-```
+For any inquiries or further information about the zKare project, please contact us.
+
+Thank you for your interest in zKare!
+
+
