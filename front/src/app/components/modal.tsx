@@ -12,7 +12,7 @@ const Modal = ({ isOpen, onClose, patient }) => {
   const [heartRate, setHeartRate] = useState('');
   const [isChecked, setIsChecked] = useState(patient.smoker)
 
-  const [tab, setTab] = useState('Records');
+  const [tab, setTab] = useState('Profile');
 
   const [records, setRecords] = useState(patient.records)
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'bulma/css/bulma.min.css';
 
-const NewPatient = ({ isOpen, onClose, patients }) => {
+const NewPatient = ({ isOpen, onClose, patients, newPatient }) => {
 
   const date = new Date().toLocaleDateString()
 
@@ -18,7 +18,8 @@ const NewPatient = ({ isOpen, onClose, patients }) => {
   }
 
   const onCreate = () => {
-    patients.push(patient)
+    newPatient(patient);
+    //patients.push(patient)
     onClose();
   }
 

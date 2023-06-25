@@ -140,13 +140,20 @@ const filteredData = data.filter((item) =>
 );
 
   const handleSave = () => {
-    setData(patients);
-    console.log(filteredData)
+
+    // setData(patients);
   };
 
   const handleDelete = (patient) => {
     const newData = data.filter(x => x.name !== patient.name);
     setData(newData);
+  }
+
+  const [patient, setPatient] = useState('')
+  const handlePatient = (patient) => {
+    setPatient(patient)
+    data.push(patient)
+    setData(data)
   }
 
   const back = {
@@ -210,7 +217,7 @@ const filteredData = data.filter((item) =>
                     </div>
                 </div>
                 <div className="buttons is-centered">
-                    <CreatePatient onSave={handleSave} patients={patients}></CreatePatient>
+                    <CreatePatient onSave={() => handleSave(patients)} patients={patients} newPatient={handlePatient}></CreatePatient>
                 </div>
             </div>
         </div>
