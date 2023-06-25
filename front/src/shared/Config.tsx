@@ -20,6 +20,10 @@ const ConfigContext = createContext({
             patientProfile: {
                 address: "",
                 schema: ""
+            },
+            patientRecord: {
+                address: "",
+                schema: ""
             }
         }
     }
@@ -45,6 +49,10 @@ export const Config = ({ children }: PropsWithChildren) => {
                 patientProfile: {
                     address: "0x9230ad22a493dddf2d41ecb7336f544bec49b1e04e591d9f9916f3c1646bb1d7",
                     schema: "string gender,bool isSmoker,bool isOverweight,string bloodType,string treatment"
+                },
+                patientRecord: {
+                    address: "0xd7ca28ca34ee0a6c54b9f0581fa629dff9d1329d55f6e1d7bc5e620fcc4e6dd1",
+                    schema: "string gender,bool isSmoker,bool isOverweight,string bloodType,string treatment,uint32 timestamp,uint16 heartRate"
                 }
             }
         }}}>
